@@ -1,0 +1,33 @@
+﻿# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-electron/
+build/
+out/
+release/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# App data (dados locais do utilizador, não versionar)
+data/cache/
+data/settings.json
+logs/
+*.log
+
+# VS Code (mantemos as configs de equipa)
+# .vscode/ <- NÃO ignorar

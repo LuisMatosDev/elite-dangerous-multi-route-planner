@@ -1,0 +1,12 @@
+﻿{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-json",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "PKief.material-icon-theme",
+    "GitHub.vscode-pull-request-github",
+    "eamodio.gitlens"
+  ]
+}
