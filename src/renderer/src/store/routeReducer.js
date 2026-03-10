@@ -1,19 +1,13 @@
 ﻿export const initialState = {
-  // Journal
   journalReady: false,
   journalError: null,
-
-  // Localização atual
   currentSystem: null,
-
-  // Nave atual
   currentShip: null,
-
-  // Rota
   waypoints: [],
   legs: [],
   totalDistance: 0,
   totalJumps: 0,
+  totalTime: null,
 };
 
 export function appReducer(state, action) {
@@ -39,15 +33,23 @@ export function appReducer(state, action) {
         waypoints: state.waypoints.filter(w => w.id !== action.payload),
       };
 
-    case 'REORDER_WAYPOINTS':
+    case 'REORDER_WAYPOINTS': {
       const { fromIndex, toIndex } = action.payload;
       const updated = [...state.waypoints];
       const [moved] = updated.splice(fromIndex, 1);
       updated.splice(toIndex, 0, moved);
       return { ...state, waypoints: updated };
+    }
 
     case 'CLEAR_WAYPOINTS':
-      return { ...state, waypoints: [], legs: [], totalDistance: 0, totalJumps: 0 };
+      return {
+        ...state,
+        waypoints: [],
+        legs: [],
+        totalDistance: 0,
+        totalJumps: 0,
+        totalTime: null,
+      };
 
     case 'UPDATE_ROUTE':
       return {
@@ -55,6 +57,7 @@ export function appReducer(state, action) {
         legs: action.payload.legs,
         totalDistance: action.payload.totalDistance,
         totalJumps: action.payload.totalJumps,
+        totalTime: action.payload.totalTime || null,
       };
 
     default:

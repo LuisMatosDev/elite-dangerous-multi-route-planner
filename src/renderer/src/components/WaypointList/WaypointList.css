@@ -1,0 +1,155 @@
+﻿.waypoint-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2.5rem 1rem;
+  color: var(--color-text-dim);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+}
+
+.waypoint-list__empty-hint {
+  color: var(--color-border-hl);
+  font-size: 0.8125rem;
+}
+
+.waypoint-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.15s;
+  animation: slide-in 0.2s ease-out;
+}
+
+.waypoint-list__item:hover {
+  background-color: var(--color-bg-card);
+}
+
+.waypoint-list__item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.waypoint-list__item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Buttons always visible - not hidden on hover (accessibility) */
+.waypoint-list__item-right {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.waypoint-list__index {
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+  min-width: 1.2rem;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+}
+
+.waypoint-list__name {
+  color: var(--color-text-bright);
+  font-size: 0.875rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.waypoint-list__coords {
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+  padding-left: 1.95rem;
+  letter-spacing: 0.04em;
+}
+
+.waypoint-list__leg {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-left: 1.95rem;
+  margin-top: 0.1rem;
+}
+
+.waypoint-list__leg-label {
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.waypoint-list__leg-value {
+  color: var(--color-amber);
+  font-size: 0.8125rem;
+}
+
+.waypoint-list__leg-jumps {
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+}
+
+.waypoint-list__leg-unknown {
+  color: var(--color-border-hl);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.waypoint-list__reorder {
+  display: flex;
+  gap: 0.2rem;
+}
+
+/* Min 44x44px touch targets */
+.waypoint-list__btn {
+  background: none;
+  border: 1px solid var(--color-border-hl);
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waypoint-list__btn:hover:not(:disabled) {
+  border-color: var(--color-amber);
+  color: var(--color-amber);
+  background-color: var(--color-amber-glow);
+}
+
+.waypoint-list__btn:focus-visible {
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+.waypoint-list__btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.waypoint-list__btn--remove:hover:not(:disabled) {
+  border-color: var(--color-red);
+  color: var(--color-red);
+  background-color: var(--color-red-dim);
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}

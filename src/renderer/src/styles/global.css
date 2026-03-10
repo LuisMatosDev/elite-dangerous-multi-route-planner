@@ -1,27 +1,87 @@
-﻿*, *::before, *::after {
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700&display=swap');
+
+:root {
+  --color-bg:           #050508;
+  --color-bg-panel:     #0a0c12;
+  --color-bg-card:      #0d1018;
+  --color-border:       #1e2435;
+  --color-border-hl:    #2e3a50;
+  --color-amber:        #ffaa00;
+  --color-amber-dim:    #996600;
+  --color-amber-glow:   rgba(255, 170, 0, 0.12);
+  --color-green:        #00dd77;
+  --color-green-dim:    #003322;
+  --color-red:          #ff4455;
+  --color-red-dim:      #3a0812;
+  --color-text:         #99aabb;
+  --color-text-dim:     #667788;
+  --color-text-bright:  #ccddee;
+  --font-mono:          'Share Tech Mono', monospace;
+  --font-display:       'Orbitron', monospace;
+  --focus-ring:         0 0 0 2px var(--color-amber);
+  --min-touch-target:   44px;
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: 'Courier New', monospace;
-  background-color: #0a0a0f;
-  color: #c8d6e5;
-  height: 100vh;
+html, body, #root {
+  height: 100%;
   overflow: hidden;
 }
 
-#root {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+body {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--color-amber);
+  color: var(--color-bg);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
 }
 
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  position: relative;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .app__main {
@@ -30,17 +90,18 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
-.app__search-demo {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.app__search-label {
-  color: #555;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
