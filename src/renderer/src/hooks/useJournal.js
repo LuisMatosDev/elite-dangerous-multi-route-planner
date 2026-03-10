@@ -1,5 +1,5 @@
-﻿import { useEffect } from 'react';
-import { useAppContext } from '../store/AppContext';
+import { useEffect } from "react";
+import { useAppContext } from "../store/AppContext";
 
 export function useJournal() {
   const { state, dispatch } = useAppContext();
@@ -7,42 +7,56 @@ export function useJournal() {
   useEffect(() => {
     if (!window.electronAPI) return;
 
-    // Pedir estado atual ao arrancar
+    // Estado inicial ao arrancar
     window.electronAPI.getJournalState().then((journalState) => {
       if (journalState.system) {
-        dispatch({ type: 'LOCATION_UPDATE', payload: journalState.system });
+        dispatch({
+          type: "LOCATION_UPDATE",
+          payload: journalState.system,
+        });
       }
       if (journalState.ship) {
-        dispatch({ type: 'SHIP_UPDATE', payload: journalState.ship });
+        dispatch({
+          type: "SHIP_UPDATE",
+          payload: {
+            ship: journalState.ship.shipName || journalState.ship.name || journalState.ship,
+            jumpRange: journalState.ship.jumpRange || null,
+          },
+        });
       }
       if (journalState.system || journalState.ship) {
-        dispatch({ type: 'JOURNAL_READY' });
+        dispatch({ type: "JOURNAL_READY" });
       }
     });
 
-    // Listeners de eventos em tempo real
-    window.electronAPI.onJournalReady((data) => {
-      dispatch({ type: 'JOURNAL_READY' });
+    // Eventos em tempo real
+    window.electronAPI.onJournalReady(() => {
+      dispatch({ type: "JOURNAL_READY" });
     });
 
-    window.electronAPI.onJournalError((data) => {
-      dispatch({ type: 'JOURNAL_ERROR', payload: data.message });
+    window.electronAPI.onJournalError((_event, data) => {
+      dispatch({ type: "JOURNAL_ERROR", payload: data?.message || "Journal error" });
     });
 
-    window.electronAPI.onLocationUpdate((system) => {
-      dispatch({ type: 'LOCATION_UPDATE', payload: system });
+    window.electronAPI.onLocationUpdate((_event, system) => {
+      dispatch({ type: "LOCATION_UPDATE", payload: system });
     });
 
-    window.electronAPI.onShipUpdate((ship) => {
-      dispatch({ type: 'SHIP_UPDATE', payload: ship });
+    window.electronAPI.onShipUpdate((_event, data) => {
+      dispatch({
+        type: "SHIP_UPDATE",
+        payload: {
+          ship: data?.shipName || data?.name || data,
+          jumpRange: data?.jumpRange || null,
+        },
+      });
     });
 
-    // Cleanup ao desmontar
     return () => {
-      window.electronAPI.removeAllListeners('journal:ready');
-      window.electronAPI.removeAllListeners('journal:error');
-      window.electronAPI.removeAllListeners('journal:locationUpdate');
-      window.electronAPI.removeAllListeners('journal:shipUpdate');
+      window.electronAPI.removeAllListeners("journal:ready");
+      window.electronAPI.removeAllListeners("journal:error");
+      window.electronAPI.removeAllListeners("journal:locationUpdate");
+      window.electronAPI.removeAllListeners("journal:shipUpdate");
     };
   }, []);
 
@@ -50,6 +64,8 @@ export function useJournal() {
     journalReady: state.journalReady,
     journalError: state.journalError,
     currentSystem: state.currentSystem,
+    currentCoords: state.currentCoords,
     currentShip: state.currentShip,
+    jumpRange: state.jumpRange,
   };
 }

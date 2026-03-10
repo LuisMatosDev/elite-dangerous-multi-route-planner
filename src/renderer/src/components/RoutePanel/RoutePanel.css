@@ -207,3 +207,28 @@
   box-shadow: var(--focus-ring);
   outline: none;
 }
+
+.route-panel__btn-add-current {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--color-amber-dim);
+  color: var(--color-amber);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 28px;
+  flex-shrink: 0;
+}
+
+.route-panel__btn-add-current:hover {
+  background-color: var(--color-amber-glow);
+  border-color: var(--color-amber);
+}
+
+.route-panel__btn-add-current:focus-visible {
+  box-shadow: var(--focus-ring);
+  outline: none;
+}

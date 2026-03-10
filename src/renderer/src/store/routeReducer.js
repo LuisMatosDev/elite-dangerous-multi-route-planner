@@ -1,8 +1,10 @@
-﻿export const initialState = {
+export const initialState = {
   journalReady: false,
   journalError: null,
   currentSystem: null,
+  currentCoords: null,
   currentShip: null,
+  jumpRange: null,
   waypoints: [],
   legs: [],
   totalDistance: 0,
@@ -12,36 +14,37 @@
 
 export function appReducer(state, action) {
   switch (action.type) {
-    case 'JOURNAL_READY':
+    case "JOURNAL_READY":
       return { ...state, journalReady: true, journalError: null };
-
-    case 'JOURNAL_ERROR':
+    case "JOURNAL_ERROR":
       return { ...state, journalReady: false, journalError: action.payload };
-
-    case 'LOCATION_UPDATE':
-      return { ...state, currentSystem: action.payload };
-
-    case 'SHIP_UPDATE':
-      return { ...state, currentShip: action.payload };
-
-    case 'ADD_WAYPOINT':
-      return { ...state, waypoints: [...state.waypoints, action.payload] };
-
-    case 'REMOVE_WAYPOINT':
+    case "LOCATION_UPDATE":
       return {
         ...state,
-        waypoints: state.waypoints.filter(w => w.id !== action.payload),
+        currentSystem: action.payload.name,
+        currentCoords: action.payload.coords || null,
       };
-
-    case 'REORDER_WAYPOINTS': {
+    case "SHIP_UPDATE":
+      return {
+        ...state,
+        currentShip: action.payload.ship,
+        jumpRange: action.payload.jumpRange || null,
+      };
+    case "ADD_WAYPOINT":
+      return { ...state, waypoints: [...state.waypoints, action.payload] };
+    case "REMOVE_WAYPOINT":
+      return {
+        ...state,
+        waypoints: state.waypoints.filter((w) => w.id !== action.payload),
+      };
+    case "REORDER_WAYPOINTS": {
       const { fromIndex, toIndex } = action.payload;
       const updated = [...state.waypoints];
       const [moved] = updated.splice(fromIndex, 1);
       updated.splice(toIndex, 0, moved);
       return { ...state, waypoints: updated };
     }
-
-    case 'CLEAR_WAYPOINTS':
+    case "CLEAR_WAYPOINTS":
       return {
         ...state,
         waypoints: [],
@@ -50,8 +53,7 @@ export function appReducer(state, action) {
         totalJumps: 0,
         totalTime: null,
       };
-
-    case 'UPDATE_ROUTE':
+    case "UPDATE_ROUTE":
       return {
         ...state,
         legs: action.payload.legs,
@@ -59,7 +61,6 @@ export function appReducer(state, action) {
         totalJumps: action.payload.totalJumps,
         totalTime: action.payload.totalTime || null,
       };
-
     default:
       return state;
   }

@@ -29,10 +29,21 @@ export function RoutePanel() {
     return `${m}m ${s}s`;
   }
 
+  const handleAddCurrentSystem = () => {
+    if (!state.currentSystem) return;
+    const system = {
+      name: state.currentSystem,
+      coords: state.currentCoords || null,
+    };
+    addWaypoint(system);
+  };
+
+  const canAddCurrent =
+    state.currentSystem &&
+    !waypoints.find((wp) => wp.system.name === state.currentSystem);
+
   if (showSaved) {
-    return (
-      <SavedRoutes onClose={() => setShowSaved(false)} />
-    );
+    return <SavedRoutes onClose={() => setShowSaved(false)} />;
   }
 
   return (
@@ -60,6 +71,13 @@ export function RoutePanel() {
         <span className="route-panel__origin-value">
           {state.currentSystem || "Unknown — launch Elite Dangerous"}
         </span>
+        {canAddCurrent && (
+          <button
+            className="route-panel__btn-add-current"
+            onClick={handleAddCurrentSystem}
+            aria-label={`Add ${state.currentSystem} as waypoint`}
+          >+ ADD</button>
+        )}
       </div>
 
       <div className="route-panel__search">
