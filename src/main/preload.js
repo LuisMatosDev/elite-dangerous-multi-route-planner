@@ -6,11 +6,21 @@ contextBridge.exposeInMainWorld("electronAPI", {
   searchSystems: (query) => ipcRenderer.invoke("journal:searchSystems", query),
   getVisitedSystems: () => ipcRenderer.invoke("journal:getVisitedSystems"),
 
-  // Route
+  // Route calculation
   calculateRoute: (waypoints, jumpRange) =>
     ipcRenderer.invoke("route:calculate", waypoints, jumpRange),
   optimizeRoute: (waypoints) =>
     ipcRenderer.invoke("route:optimize", waypoints),
+
+  // Route store
+  saveRoute: (name, routeData) =>
+    ipcRenderer.invoke("routeStore:save", name, routeData),
+  loadRoute: (name) =>
+    ipcRenderer.invoke("routeStore:load", name),
+  deleteRoute: (name) =>
+    ipcRenderer.invoke("routeStore:delete", name),
+  listRoutes: () =>
+    ipcRenderer.invoke("routeStore:list"),
 
   // Elite status
   getEliteStatus: () => ipcRenderer.invoke("elite:getStatus"),

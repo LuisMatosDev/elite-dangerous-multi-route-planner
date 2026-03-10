@@ -5,6 +5,7 @@ const EliteDetector = require("./services/EliteDetector");
 const { registerJournalHandlers } = require("./ipc/journalHandlers");
 const { registerRouteHandlers } = require("./ipc/routeHandlers");
 const { registerEliteHandlers } = require("./ipc/eliteHandlers");
+const { registerRouteStoreHandlers } = require("./ipc/routeStoreHandlers");
 
 const isDev = process.env.NODE_ENV === "development";
 const showDevTools = process.env.DEVTOOLS === "true";
@@ -54,6 +55,9 @@ function createWindow() {
 }
 
 async function initServices() {
+  // RouteStore (sem dependências, regista primeiro)
+  registerRouteStoreHandlers();
+
   // JournalWatcher
   journalWatcher = new JournalWatcher();
   registerJournalHandlers(mainWindow, journalWatcher);

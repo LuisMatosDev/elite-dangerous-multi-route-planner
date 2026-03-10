@@ -1,40 +1,38 @@
-﻿{
-    "name":  "multi-route-planner",
-    "version":  "1.0.0",
-    "description":  "",
-    "main":  "src/main/index.js",
-    "scripts":  {
-                    "dev":  "concurrently \"vite\" \"cross-env NODE_ENV=development electron .\"",
-                    "build":  "vite build \u0026\u0026 electron-builder",
-                    "preview":  "vite preview",
-                    "lint":  "eslint src --ext .js,.jsx",
-                    "format":  "prettier --write src",
-                    "dev:tools":  "concurrently \"vite\" \"cross-env NODE_ENV=development DEVTOOLS=true electron .\""
-                },
-    "keywords":  [
-
-                 ],
-    "author":  "",
-    "license":  "ISC",
-    "type":  "commonjs",
-    "devDependencies":  {
-                            "@eslint/js":  "^10.0.1",
-                            "@vitejs/plugin-react":  "^5.1.4",
-                            "concurrently":  "^9.2.1",
-                            "cross-env":  "^10.1.0",
-                            "electron":  "^40.8.0",
-                            "electron-builder":  "^26.8.1",
-                            "eslint":  "^10.0.3",
-                            "eslint-config-prettier":  "^10.1.8",
-                            "prettier":  "^3.8.1",
-                            "vite":  "^7.3.1"
-                        },
-    "dependencies":  {
-                         "chokidar":  "^5.0.0",
-                         "electron-store":  "^11.0.2",
-                         "node-fetch":  "^3.3.2",
-                         "react":  "^19.2.4",
-                         "react-dom":  "^19.2.4",
-                         "uuid":  "^13.0.0"
-                     }
+{
+    "name": "multi-route-planner",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/main/index.js",
+    "scripts": {
+        "dev": "concurrently \"vite\" \"cross-env NODE_ENV=development electron .\"",
+        "build": "vite build && electron-builder",
+        "preview": "vite preview",
+        "lint": "eslint src --ext .js,.jsx",
+        "format": "prettier --write src",
+        "dev:tools": "concurrently \"vite\" \"cross-env NODE_ENV=development DEVTOOLS=true electron .\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@vitejs/plugin-react": "^5.1.4",
+        "concurrently": "^9.2.1",
+        "cross-env": "^10.1.0",
+        "electron": "^40.8.0",
+        "electron-builder": "^26.8.1",
+        "eslint": "^10.0.3",
+        "eslint-config-prettier": "^10.1.8",
+        "prettier": "^3.8.1",
+        "vite": "^7.3.1"
+    },
+    "dependencies": {
+        "chokidar": "^5.0.0",
+        "electron-store": "^8.2.0",
+        "node-fetch": "^3.3.2",
+        "react": "^19.2.4",
+        "react-dom": "^19.2.4",
+        "uuid": "^13.0.0"
+    }
 }

@@ -1,84 +1,104 @@
-﻿import { useCallback } from 'react';
-import { useAppContext } from '../store/AppContext';
+import { useState, useCallback } from "react";
+import { useAppContext } from "../store/AppContext";
 
 export function useRoute() {
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext();
+  const [waypoints, setWaypoints] = useState([]);
+  const [legs, setLegs] = useState([]);
+  const [routeSummary, setRouteSummary] = useState(null);
 
   const addWaypoint = useCallback((system) => {
-    const waypoint = {
-      id: `${system.name}-${Date.now()}`,
-      system,
-      label: system.name,
-      visited: false,
-      createdAt: new Date().toISOString(),
-    };
-    dispatch({ type: 'ADD_WAYPOINT', payload: waypoint });
-  }, [dispatch]);
+    setWaypoints((prev) => {
+      if (prev.find((wp) => wp.system.name === system.name)) return prev;
+      const newWp = {
+        id: crypto.randomUUID(),
+        system,
+        label: null,
+        visited: false,
+        createdAt: new Date().toISOString(),
+      };
+      return [...prev, newWp];
+    });
+  }, []);
 
   const removeWaypoint = useCallback((id) => {
-    dispatch({ type: 'REMOVE_WAYPOINT', payload: id });
-  }, [dispatch]);
+    setWaypoints((prev) => prev.filter((wp) => wp.id !== id));
+    setLegs([]);
+    setRouteSummary(null);
+  }, []);
 
   const reorderWaypoints = useCallback((fromIndex, toIndex) => {
-    dispatch({ type: 'REORDER_WAYPOINTS', payload: { fromIndex, toIndex } });
-  }, [dispatch]);
+    if (toIndex < 0 || toIndex >= waypoints.length) return;
+    setWaypoints((prev) => {
+      const updated = [...prev];
+      const [moved] = updated.splice(fromIndex, 1);
+      updated.splice(toIndex, 0, moved);
+      return updated;
+    });
+    setLegs([]);
+    setRouteSummary(null);
+  }, [waypoints.length]);
 
   const clearWaypoints = useCallback(() => {
-    dispatch({ type: 'CLEAR_WAYPOINTS' });
-  }, [dispatch]);
+    setWaypoints([]);
+    setLegs([]);
+    setRouteSummary(null);
+  }, []);
 
-  const calculateDistances = useCallback(async (waypointsOverride) => {
-    const waypoints = waypointsOverride || state.waypoints;
-    if (waypoints.length < 1) return;
+  const loadSavedRoute = useCallback((savedRoute) => {
+    const restored = savedRoute.waypoints.map((wp) => ({
+      id: wp.id || crypto.randomUUID(),
+      system: wp.system,
+      label: wp.label || null,
+      visited: false,
+      createdAt: wp.createdAt || new Date().toISOString(),
+    }));
+    setWaypoints(restored);
+    setLegs([]);
+    setRouteSummary(null);
+  }, []);
 
+  const calculateRoute = useCallback(async () => {
+    if (waypoints.length === 0) return;
     try {
       const result = await window.electronAPI.calculateRoute(
         waypoints,
-        parseFloat(state.currentShip?.jumpRange || 0)
+        state.jumpRange
       );
-
-      dispatch({
-        type: 'UPDATE_ROUTE',
-        payload: {
-          legs: result.legs,
-          totalDistance: result.totalDistance,
-          totalJumps: result.totalJumps,
-          totalTime: result.totalTime,
-        },
-      });
-    } catch (err) {
-      console.error('[useRoute] calculateDistances failed:', err);
-    }
-  }, [state.waypoints, state.currentShip, dispatch]);
-
-  const optimizeOrder = useCallback(async () => {
-    if (state.waypoints.length < 3) return;
-
-    try {
-      const optimized = await window.electronAPI.optimizeRoute(state.waypoints);
-      dispatch({ type: 'CLEAR_WAYPOINTS' });
-      for (const waypoint of optimized) {
-        dispatch({ type: 'ADD_WAYPOINT', payload: waypoint });
+      if (result && result.legs) {
+        setLegs(result.legs);
+        setRouteSummary(result.summary);
       }
-      await calculateDistances(optimized);
     } catch (err) {
-      console.error('[useRoute] optimizeOrder failed:', err);
+      console.error("[useRoute] calculateRoute error:", err);
     }
-  }, [state.waypoints, dispatch, calculateDistances]);
+  }, [waypoints, state.jumpRange]);
+
+  const optimizeRoute = useCallback(async () => {
+    if (waypoints.length < 3) return;
+    try {
+      const result = await window.electronAPI.optimizeRoute(waypoints);
+      if (result && result.waypoints) {
+        setWaypoints(result.waypoints);
+        setLegs(result.legs || []);
+        setRouteSummary(result.summary || null);
+      }
+    } catch (err) {
+      console.error("[useRoute] optimizeRoute error:", err);
+    }
+  }, [waypoints]);
 
   return {
-    waypoints: state.waypoints,
-    legs: state.legs,
-    totalDistance: state.totalDistance,
-    totalJumps: state.totalJumps,
-    totalTime: state.totalTime,
-    currentSystem: state.currentSystem,
-    currentShip: state.currentShip,
+    waypoints,
+    legs,
+    routeSummary,
     addWaypoint,
     removeWaypoint,
     reorderWaypoints,
     clearWaypoints,
-    calculateDistances,
-    optimizeOrder,
+    loadSavedRoute,
+    calculateRoute,
+    optimizeRoute,
+    jumpRange: state.jumpRange,
   };
 }
