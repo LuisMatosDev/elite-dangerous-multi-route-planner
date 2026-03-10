@@ -1,25 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700&display=swap");
 
 :root {
-  --color-bg:           #050508;
-  --color-bg-panel:     #0a0c12;
-  --color-bg-card:      #0d1018;
-  --color-border:       #1e2435;
-  --color-border-hl:    #2e3a50;
-  --color-amber:        #ffaa00;
-  --color-amber-dim:    #996600;
-  --color-amber-glow:   rgba(255, 170, 0, 0.12);
-  --color-green:        #00dd77;
-  --color-green-dim:    #003322;
-  --color-red:          #ff4455;
-  --color-red-dim:      #3a0812;
-  --color-text:         #99aabb;
-  --color-text-dim:     #667788;
-  --color-text-bright:  #ccddee;
-  --font-mono:          'Share Tech Mono', monospace;
-  --font-display:       'Orbitron', monospace;
-  --focus-ring:         0 0 0 2px var(--color-amber);
-  --min-touch-target:   44px;
+  --color-bg:          #050508;
+  --color-bg-panel:    #0a0c12;
+  --color-bg-card:     #0d1018;
+  --color-border:      #1e2435;
+  --color-border-hl:   #2e3a50;
+  --color-amber:       #ffaa00;
+  --color-amber-dim:   #996600;
+  --color-amber-glow:  rgba(255, 170, 0, 0.12);
+  --color-green:       #00dd77;
+  --color-green-dim:   #003322;
+  --color-red:         #ff4455;
+  --color-red-dim:     #3a0812;
+  --color-text:        #99aabb;
+  --color-text-dim:    #667788;
+  --color-text-bright: #ccddee;
+  --font-mono:         "Share Tech Mono", monospace;
+  --font-display:      "Orbitron", monospace;
+  --focus-ring:        0 0 0 2px var(--color-amber);
+  --min-touch-target:  44px;
 }
 
 *, *::before, *::after {
@@ -64,19 +64,17 @@ body {
   transition: top 0.2s;
 }
 
-.skip-link:focus {
-  top: 0.5rem;
-}
+.skip-link:focus { top: 0.5rem; }
 
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  position: relative;
+  overflow: hidden;
 }
 
 .app::before {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.5) 100%);
@@ -87,11 +85,12 @@ body {
 .app__main {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
   position: relative;
   z-index: 1;
+  padding: 1.5rem 1rem;
 }
 
 .sr-only {
