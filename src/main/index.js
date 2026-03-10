@@ -1,14 +1,17 @@
 const { app, BrowserWindow, screen } = require("electron");
 const path = require("path");
 const JournalWatcher = require("./services/JournalWatcher");
+const EliteDetector = require("./services/EliteDetector");
 const { registerJournalHandlers } = require("./ipc/journalHandlers");
 const { registerRouteHandlers } = require("./ipc/routeHandlers");
+const { registerEliteHandlers } = require("./ipc/eliteHandlers");
 
 const isDev = process.env.NODE_ENV === "development";
 const showDevTools = process.env.DEVTOOLS === "true";
 
 let mainWindow = null;
 let journalWatcher = null;
+let eliteDetector = null;
 
 function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
@@ -42,7 +45,7 @@ function createWindow() {
 
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
-    initJournalWatcher();
+    initServices();
   });
 
   mainWindow.on("closed", () => {
@@ -50,7 +53,8 @@ function createWindow() {
   });
 }
 
-async function initJournalWatcher() {
+async function initServices() {
+  // JournalWatcher
   journalWatcher = new JournalWatcher();
   registerJournalHandlers(mainWindow, journalWatcher);
   registerRouteHandlers(journalWatcher);
@@ -59,6 +63,11 @@ async function initJournalWatcher() {
   if (!success) {
     console.warn("[Main] JournalWatcher failed — Elite Dangerous not detected");
   }
+
+  // EliteDetector
+  eliteDetector = new EliteDetector(5000);
+  registerEliteHandlers(mainWindow, eliteDetector);
+  eliteDetector.start();
 }
 
 app.whenReady().then(() => {
@@ -70,5 +79,6 @@ app.whenReady().then(() => {
 
 app.on("window-all-closed", () => {
   if (journalWatcher) journalWatcher.destroy();
+  if (eliteDetector) eliteDetector.destroy();
   if (process.platform !== "darwin") app.quit();
 });
