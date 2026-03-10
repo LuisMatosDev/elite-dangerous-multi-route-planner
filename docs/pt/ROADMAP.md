@@ -1,106 +1,107 @@
-# Elite Dangerous Multi-Route Planner â€” Roadmap
+# Elite Dangerous Multi-Route Planner — Roteiro
 
-> VersÃ£o atual: 0.1.0-dev
+> Versao atual: 0.1.0-dev
 > Stack: Electron + React + Vite
-> RepositÃ³rio: https://github.com/LuisMatosDev/elite-dangerous-multi-route-planner
+> Repositorio: https://github.com/LuisMatosDev/elite-dangerous-multi-route-planner
 
 ---
 
 ## Sistema de Prioridades
 
-| Cor | NÃ­vel | DescriÃ§Ã£o |
+| Cor | Nivel | Descricao |
 |-----|-------|-----------|
-| ðŸ”´ | CrÃ­tico | App nÃ£o funciona corretamente sem isto |
-| ðŸŸ  | Urgente | Impacto direto na usabilidade |
-| ðŸŸ¡ | PrioritÃ¡rio | Melhora significativamente a experiÃªncia |
-| ðŸŸ¢ | NÃ£o Urgente | Nice to have |
-| ðŸ”µ | Normal | Polish e apresentaÃ§Ã£o |
+| 🔴 | Critico | App nao funciona corretamente sem isto |
+| 🟠 | Urgente | Impacto direto na usabilidade |
+| 🟡 | Prioritario | Melhora significativamente a experiencia |
+| 🟢 | Nao Urgente | Nice to have |
+| 🔵 | Normal | Polish e apresentacao |
 
 ---
 
-## Fase 1 â€” Core Local (atual)
+## Fase 1 — Core Local (atual)
 
 | Estado | Prioridade | Feature |
 |--------|-----------|---------|
-| âœ… Done | ðŸ”´ | JournalWatcher â€” leitura de logs em tempo real |
-| âœ… Done | ðŸ”´ | StatusBar â€” sistema atual, nave, jump range |
-| âœ… Done | ðŸ”´ | SystemSearch â€” pesquisa de sistemas visitados |
-| âœ… Done | ðŸ”´ | WaypointList â€” adicionar/remover/reordenar waypoints |
-| âœ… Done | ðŸ”´ | RouteCalculator â€” cÃ¡lculo de distÃ¢ncias e jumps locais |
-| âœ… Done | ðŸ”´ | RoutePanel â€” layout principal unificado |
-| âœ… Done | ðŸ”´ | WCAG 2.1 AA â€” acessibilidade e usabilidade |
+| ✅ Done | 🔴 | JournalWatcher — leitura de logs em tempo real |
+| ✅ Done | 🔴 | StatusBar — sistema atual, nave, jump range |
+| ✅ Done | 🔴 | SystemSearch — pesquisa de sistemas visitados |
+| ✅ Done | 🔴 | WaypointList — adicionar/remover/reordenar waypoints |
+| ✅ Done | 🔴 | RouteCalculator — calculo de distancias e jumps locais |
+| ✅ Done | 🔴 | RoutePanel — layout principal unificado |
+| ✅ Done | 🔴 | WCAG 2.1 AA — acessibilidade e usabilidade |
 
 ---
 
-## Fase 2 â€” Funcionalidade Essencial
+## Fase 2 — Funcionalidade Essencial
 
 | Estado | Prioridade | Feature | Notas |
 |--------|-----------|---------|-------|
-| â³ Pending | ðŸ”´ | Guardar e carregar rotas | Usar electron-store |
-| â³ Pending | ðŸ”´ | DeteÃ§Ã£o de Elite Dangerous em execuÃ§Ã£o | Verificar processo ativo |
-| â³ Pending | ðŸŸ  | BotÃ£o "Adicionar sistema atual" como waypoint | 1 clique no StatusBar |
-| â³ Pending | ðŸŸ  | Marcar waypoint como visitado ao fazer FSDJump | Via JournalWatcher |
-| â³ Pending | ðŸŸ  | StatusBar atualiza em tempo real ao fazer jump | JÃ¡ parcialmente implementado |
-| â³ Pending | ðŸŸ  | Filtro no SystemSearch por distÃ¢ncia mÃ¡xima | Input de range |
+| ✅ Done | 🔴 | Guardar e carregar rotas | electron-store v8 |
+| ✅ Done | 🔴 | Detecao de Elite Dangerous em execucao | Verificar processo ativo |
+| ⏳ Pending | 🟠 | Botao Adicionar sistema atual como waypoint | 1 clique no StatusBar |
+| ⏳ Pending | 🟠 | Marcar waypoint como visitado ao fazer FSDJump | Via JournalWatcher |
+| ⏳ Pending | 🟠 | StatusBar atualiza em tempo real ao fazer jump | Ja parcialmente implementado |
+| ⏳ Pending | 🟠 | Filtro no SystemSearch por distancia maxima | Input de range |
 
 ---
 
-## Fase 3 â€” Melhorias de ExperiÃªncia
+## Fase 3 — Melhorias de Experiencia
 
 | Estado | Prioridade | Feature | Notas |
 |--------|-----------|---------|-------|
-| â³ Pending | ðŸŸ¡ | Indicador de progresso da rota | X/Y waypoints visitados |
-| â³ Pending | ðŸŸ¡ | OrdenaÃ§Ã£o no search por distÃ¢ncia ao sistema atual | Alternativa Ã  ordem alfabÃ©tica |
-| â³ Pending | ðŸŸ¡ | Exportar rota para clipboard | Formato texto partilhÃ¡vel |
-| â³ Pending | ðŸŸ¡ | Cor diferente em waypoints visitados vs pendentes | Verde/Ã¢mbar |
+| ⏳ Pending | 🟡 | Indicador de progresso da rota | X/Y waypoints visitados |
+| ⏳ Pending | 🟡 | Ordenacao no search por distancia ao sistema atual | Alternativa a ordem alfabetica |
+| ⏳ Pending | 🟡 | Exportar rota para clipboard | Formato texto partilhavel |
+| ⏳ Pending | 🟡 | Cor diferente em waypoints visitados vs pendentes | Verde/ambar |
+| ⏳ Pending | 🟡 | Seletor de nave com jump range automatico | Dados do Inara |
 
 ---
 
-## Fase 4 â€” Visual e Polish
+## Fase 4 — Visual e Polish
 
 | Estado | Prioridade | Feature | Notas |
 |--------|-----------|---------|-------|
-| â³ Pending | ðŸŸ¢ | Ãcone de tipo de estrela (scoopable/non-scoopable) | Dados do journal |
-| â³ Pending | ðŸŸ¢ | AnimaÃ§Ã£o de conexÃ£o entre waypoints | CSS animation |
-| â³ Pending | ðŸŸ¢ | EstatÃ­sticas do histÃ³rico de journals | NÂº sistemas visitados, etc |
-| â³ Pending | ðŸŸ¢ | AnimaÃ§Ã£o no StatusBar ao detetar novo jump | Micro-interaction |
+| ⏳ Pending | 🟢 | Icone de tipo de estrela (scoopable/non-scoopable) | Dados do journal |
+| ⏳ Pending | 🟢 | Animacao de conexao entre waypoints | CSS animation |
+| ⏳ Pending | 🟢 | Estatisticas do historico de journals | Nr sistemas visitados, etc |
+| ⏳ Pending | 🟢 | Animacao no StatusBar ao detetar novo jump | Micro-interaction |
 
 ---
 
-## Fase 5 â€” APIs Externas
+## Fase 5 — APIs Externas
 
 | Estado | Prioridade | Feature | Notas |
 |--------|-----------|---------|-------|
-| â³ Pending | ðŸŸ  | IntegraÃ§Ã£o EDSM API | Aguarda acesso/aprovaÃ§Ã£o |
-| â³ Pending | ðŸŸ  | IntegraÃ§Ã£o Spansh API | Aguarda acesso/aprovaÃ§Ã£o |
-| â³ Pending | ðŸŸ¡ | Search de sistemas nÃ£o visitados via API | Depende de EDSM/Spansh |
-| â³ Pending | ðŸŸ¡ | Route plotting via Spansh neutron plotter | Depende de Spansh |
+| ⏳ Pending | 🟠 | Integracao EDSM API | Aguarda acesso/aprovacao |
+| ⏳ Pending | 🟠 | Integracao Spansh API | Aguarda acesso/aprovacao |
+| ⏳ Pending | 🟡 | Search de sistemas nao visitados via API | Depende de EDSM/Spansh |
+| ⏳ Pending | 🟡 | Route plotting via Spansh neutron plotter | Depende de Spansh |
 
 ---
 
-## Fase 6 â€” ApresentaÃ§Ã£o e Portfolio
+## Fase 6 — Apresentacao e Portfolio
 
 | Estado | Prioridade | Feature | Notas |
 |--------|-----------|---------|-------|
-| â³ Pending | ðŸ”µ | README.md completo com screenshots | GitHub |
-| â³ Pending | ðŸ”µ | PÃ¡gina About na app | VersÃ£o, crÃ©ditos, licenÃ§a |
-| â³ Pending | ðŸ”µ | LicenÃ§a open-source | MIT recomendado |
-| â³ Pending | ðŸ”µ | Refactor do package name | multi-route-planner |
-| â³ Pending | ðŸ”µ | Build de produÃ§Ã£o e instalador Windows | electron-builder |
+| ⏳ Pending | 🔵 | README.md completo com screenshots | GitHub |
+| ⏳ Pending | 🔵 | Pagina About na app | Versao, creditos, licenca |
+| ⏳ Pending | 🔵 | Licenca open-source | MIT recomendado |
+| ⏳ Pending | 🔵 | Refactor do package name | multi-route-planner |
+| ⏳ Pending | 🔵 | Build de producao e instalador Windows | electron-builder |
 
 ---
 
 ## Legenda de Estado
 
-| SÃ­mbolo | Significado |
+| Simbolo | Significado |
 |---------|------------|
-| âœ… Done | Implementado e testado |
-| ðŸš§ WIP | Em desenvolvimento |
-| â³ Pending | Aguarda implementaÃ§Ã£o |
-| âŒ Blocked | Bloqueado por dependÃªncia externa |
-| ðŸ”„ RevisÃ£o | Implementado, a necessitar de revisÃ£o |
+| ✅ Done | Implementado e testado |
+| 🚧 WIP | Em desenvolvimento |
+| ⏳ Pending | Aguarda implementacao |
+| ❌ Blocked | Bloqueado por dependencia externa |
+| 🔄 Revisao | Implementado, a necessitar de revisao |
 
 ---
 
-*Ãšltima atualizaÃ§Ã£o: Marco 2026*
+*Ultima atualizacao: Marco 2026*
 *Desenvolvido por: Luis Matos*
