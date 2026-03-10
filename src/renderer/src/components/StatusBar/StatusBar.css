@@ -1,0 +1,48 @@
+﻿.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #0d1117;
+  border-bottom: 1px solid #f90;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.status-bar__section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-bar__label {
+  color: #555;
+  font-weight: bold;
+}
+
+.status-bar__value {
+  color: #f90;
+}
+
+.status-bar__indicator {
+  font-weight: bold;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+}
+
+.status-bar__indicator.online {
+  color: #0f0;
+  border: 1px solid #0f0;
+}
+
+.status-bar__indicator.offline {
+  color: #555;
+  border: 1px solid #555;
+}
+
+.status-bar__error {
+  margin-left: auto;
+  color: #f33;
+  font-size: 0.7rem;
+}

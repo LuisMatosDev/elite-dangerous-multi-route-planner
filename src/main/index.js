@@ -1,10 +1,16 @@
 ﻿const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const JournalWatcher = require('./services/JournalWatcher');
+const { registerJournalHandlers } = require('./ipc/journalHandlers');
+const { registerRouteHandlers } = require('./ipc/routeHandlers');
 
 const isDev = process.env.NODE_ENV === 'development';
 
+let mainWindow = null;
+let journalWatcher = null;
+
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
     minWidth: 900,
@@ -27,7 +33,23 @@ function createWindow() {
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
+    initJournalWatcher();
   });
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+}
+
+async function initJournalWatcher() {
+  journalWatcher = new JournalWatcher();
+  registerJournalHandlers(mainWindow, journalWatcher);
+  registerRouteHandlers();
+
+  const success = await journalWatcher.initialize();
+  if (!success) {
+    console.warn('[Main] JournalWatcher failed to initialize - Elite Dangerous not detected');
+  }
 }
 
 app.whenReady().then(() => {
@@ -41,6 +63,9 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
+  if (journalWatcher) {
+    journalWatcher.destroy();
+  }
   if (process.platform !== 'darwin') {
     app.quit();
   }

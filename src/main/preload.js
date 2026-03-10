@@ -1,18 +1,32 @@
 ﻿const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  // Journal
-  onJournalUpdate: (callback) => ipcRenderer.on('journal-update', callback),
-  onLocationUpdate: (callback) => ipcRenderer.on('location-update', callback),
-  onShipUpdate: (callback) => ipcRenderer.on('ship-update', callback),
+  // Estado atual do journal
+  getJournalState: () => ipcRenderer.invoke('journal:getState'),
 
-  // Routes
+  // Listeners de eventos do journal
+  onLocationUpdate: (callback) =>
+    ipcRenderer.on('journal:locationUpdate', (_, data) => callback(data)),
+  onShipUpdate: (callback) =>
+    ipcRenderer.on('journal:shipUpdate', (_, data) => callback(data)),
+  onJournalReady: (callback) =>
+    ipcRenderer.on('journal:ready', (_, data) => callback(data)),
+  onJournalError: (callback) =>
+    ipcRenderer.on('journal:error', (_, data) => callback(data)),
+  onDocked: (callback) =>
+    ipcRenderer.on('journal:docked', (_, data) => callback(data)),
+  onUndocked: (callback) =>
+    ipcRenderer.on('journal:undocked', (_, data) => callback(data)),
+
+  // Rotas (TODO: APIs externas)
   calculateRoute: (from, to, jumpRange) =>
-    ipcRenderer.invoke('calculate-route', { from, to, jumpRange }),
+    ipcRenderer.invoke('route:calculate', { from, to, jumpRange }),
   searchSystem: (query) =>
-    ipcRenderer.invoke('search-system', query),
+    ipcRenderer.invoke('route:searchSystem', query),
 
-  // Cleanup
+  // Cleanup de listeners
+  removeListener: (channel, callback) =>
+    ipcRenderer.removeListener(channel, callback),
   removeAllListeners: (channel) =>
     ipcRenderer.removeAllListeners(channel),
 });

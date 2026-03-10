@@ -1,10 +1,18 @@
 ﻿import React from 'react';
+import { AppProvider } from './store/AppContext';
+import { StatusBar } from './components/StatusBar/StatusBar';
+import './styles/global.css';
 
 function App() {
   return (
-    <div className="app">
-      <h1>Elite Dangerous - Multi Route Planner</h1>
-    </div>
+    <AppProvider>
+      <div className="app">
+        <StatusBar />
+        <main className="app__main">
+          <p className="app__placeholder">Route planner coming soon...</p>
+        </main>
+      </div>
+    </AppProvider>
   );
 }
 
