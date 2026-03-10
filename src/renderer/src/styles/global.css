@@ -32,8 +32,15 @@ body {
   overflow: hidden;
 }
 
-.app__placeholder {
-  color: #333;
-  font-size: 0.9rem;
+.app__search-demo {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.app__search-label {
+  color: #555;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
 }

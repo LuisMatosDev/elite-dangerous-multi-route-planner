@@ -1,10 +1,10 @@
 ﻿const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  // Estado atual do journal
   getJournalState: () => ipcRenderer.invoke('journal:getState'),
+  searchSystems: (query) => ipcRenderer.invoke('journal:searchSystems', query),
+  getVisitedSystems: () => ipcRenderer.invoke('journal:getVisitedSystems'),
 
-  // Listeners de eventos do journal
   onLocationUpdate: (callback) =>
     ipcRenderer.on('journal:locationUpdate', (_, data) => callback(data)),
   onShipUpdate: (callback) =>
@@ -18,15 +18,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onUndocked: (callback) =>
     ipcRenderer.on('journal:undocked', (_, data) => callback(data)),
 
-  // Rotas (TODO: APIs externas)
   calculateRoute: (from, to, jumpRange) =>
     ipcRenderer.invoke('route:calculate', { from, to, jumpRange }),
-  searchSystem: (query) =>
-    ipcRenderer.invoke('route:searchSystem', query),
 
-  // Cleanup de listeners
-  removeListener: (channel, callback) =>
-    ipcRenderer.removeListener(channel, callback),
   removeAllListeners: (channel) =>
     ipcRenderer.removeAllListeners(channel),
 });

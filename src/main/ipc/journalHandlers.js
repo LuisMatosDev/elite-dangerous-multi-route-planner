@@ -1,12 +1,18 @@
 ﻿const { ipcMain } = require('electron');
 
 function registerJournalHandlers(mainWindow, journalWatcher) {
-  // Quando o renderer pede o estado atual
   ipcMain.handle('journal:getState', () => {
     return journalWatcher.getState();
   });
 
-  // Reencaminhar eventos do JournalWatcher para o renderer
+  ipcMain.handle('journal:searchSystems', (_, query) => {
+    return journalWatcher.searchVisitedSystems(query);
+  });
+
+  ipcMain.handle('journal:getVisitedSystems', () => {
+    return journalWatcher.getVisitedSystems();
+  });
+
   journalWatcher.on('locationUpdate', (system) => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send('journal:locationUpdate', system);
